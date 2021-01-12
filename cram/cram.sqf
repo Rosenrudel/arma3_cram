@@ -1,29 +1,30 @@
 params["_cram","_radarrange"];
 _null = [_cram,_radarrange]spawn{
-	private["_cram","_radarrange","_rate","_rangeCramAttention","_rangeCramEngage","_timeBetweenShots","_maxHeightIntercept","_shellRegistry","_targetRegistry","_target","_playAlert","_handleCBATargetDebug","_salvos","_shots","_targetsNotTracked"];
+	// private["_cram","_radarrange","_rate","_rangeCramAttention","_rangeCramEngage","_timeBetweenShots","_maxHeightIntercept","_shellRegistry","_targetRegistry","_target","_playAlert","_handleCBATargetDebug","_salvos","_shots","_targetsNotTracked"];
 	// THIS ABOVE HERE NEEDS TO GO!! IT IS BAD FOR PERFORMANCE AS PER BIS WIKI
-	_cram = _this select 0;
-	_radarrange = _this select 1;
-	_rate =	4615;
-	_rangeCramAttention = 3000;
-	_rangeCramEngage = 1500;
-	_timeBetweenShots = 1 / (_rate / 60);
-	_maxHeightIntercept = 30;
-	_shellRegistry = [];
-	_isDecending = velocity _x select 2 < 0; //INSPIRED BY YAX'S ITC MOD
-	_canIntercept = getPosATL _x select 2 > _maxHeightIntercept; //INSPIRED BY YAX'S ITC MOD
-	_targetRegistry = [];
-	_targetsNotTracked = [];
-	_target = "";
-	_playAlert = false;
-	_handleCBATargetDebug = [];
-	_salvos = 1;
-	_shotsMin = 100;
-	_shotsMid = 200;
-	_shotsMax = 300;
-	_turretAngleMaxRight = _cram getRelDir _target < 0 + 55;
-	_turretAngleMaxLeft = _cram getRelDir _target > 360 - 55;
-	_withinTurretAngle = _turretAngleMaxLeft || _turretAngleMaxRight;
+	private _cram = _this select 0;
+	private _radarrange = _this select 1;
+	private _rate =	4615;
+	private _rangeCramAttention = 3000;
+	private _rangeCramEngage = 1500;
+	private _timeBetweenShots = 1 / (_rate / 60);
+	private _maxHeightIntercept = 30;
+	private _shellRegistry = [];
+	private _isDecending = velocity _x select 2 < 0; //INSPIRED BY YAX'S ITC MOD
+	private _canIntercept = getPosATL _x select 2 > _maxHeightIntercept; //INSPIRED BY YAX'S ITC MOD
+	private _targetRegistry = [];
+	private _targetsNotTracked = [];
+	private _target = "";
+	private _playAlert = false;
+	private _handleCBATargetDebug = [];
+	private _salvos = 1;
+	private _shots = 0;
+	private _shotsMin = 100;
+	private _shotsMid = 200;
+	private _shotsMax = 300;
+	private _turretAngleMaxRight = _cram getRelDir _target < 0 + 55;
+	private _turretAngleMaxLeft = _cram getRelDir _target > 360 - 55;
+	private _withinTurretAngle = _turretAngleMaxLeft || _turretAngleMaxRight;
 	systemChat format ["A CRAM HAS BEEN INITIALIZED AT %1", (mapGridPosition _cram)];
 	while{alive _cram}do{
 		
