@@ -7,4 +7,10 @@ class RR_CRAM
 		class initCram {};
 		class addCram {};
 	};
+
+	class Generic
+	{
+		file = "arma3_cram\generic";
+		class discoverTargets {};
+	}
 };

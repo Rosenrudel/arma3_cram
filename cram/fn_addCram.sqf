@@ -1,15 +1,12 @@
 params["_cram","_radarrange"];
 
-#include "CfgDefines.hpp"
+#include "..\CfgDefines.hpp"
 
 private _rate =	4615;
 private _rangeCramAttention = 3000;
 private _rangeCramEngage = 1500;
 private _timeBetweenShots = 1 / (_rate / 60);
 private _maxHeightIntercept = 30;
-private _shellRegistry = [];
-private _isDecending = {velocity _this select 2 < 0}; //INSPIRED BY YAX'S ITC MOD
-private _canIntercept = {getPosATL _this select 2 > _maxHeightIntercept}; //INSPIRED BY YAX'S ITC MOD
 private _targetRegistry = [];
 private _targetsNotTracked = [];
 private _target = "";
@@ -31,40 +28,12 @@ private _withinTurretAngle = {call _turretAngleMaxLeft || call _turretAngleMaxRi
 while{alive _cram}do{
 	
 	_salvos = 1; // RESET SALVOS
-	_shellRegistry = []; // RESET SHELLREGISTRY EMPTY
-
-	_shellRegistry append (_cram nearObjects["Rocketbase",_radarrange]); // BETTER: ARRAY CHECK FOR IF CONDITION WITH LOOPING THROUGH BY VARIABLE
-	_shellRegistry append (_cram nearObjects["ShellBase",_radarrange]);
-//		_shellRegistry append (_cram nearObjects["MissileBase",_radarrange]); // conflicting with line 27 for incoming shells or rockets
-
-	#ifdef DEBUG
-	if(count _shellRegistry > 0) then {
-		systemChat "A SHELL WAS REGISTERED BY CRAM";
-		systemChat format ["SHELL: %1", _shellRegistry select 0]
-	};
-	#endif
-
-	_targetRegistry = _shellRegistry select {_x call _canIntercept && _x call _isDecending}; // INSPIRED BY YAX'S ITC MOD
-	
-	#ifdef DEBUG
-	if(count _targetRegistry > 0) then {
-		systemChat "AN INTERCEPTABLE TARGET WAS REGISTERED";
-	};
-	#endif
-
-	_targetsNotTracked = _targetRegistry select {!(_x getVariable ["isTracked",false])};
-	
-	#ifdef DEBUG
-	if(count _targetsNotTracked > 0) then {
-		systemChat "CRAM HAS IDENTIFIED VALID UNTRACKED TARGET";
-	};
-	#endif
+	_targetsNotTracked = [getPosATL _cram, _rangeCramAttention] call RR_fnc_discoverTargets; // RESET SHELLREGISTRY EMPTY
 
 	_cram doWatch objNull; //RESET ORIENTATION FRONT IF NO VALID TARGET
 
 	if(count _targetsNotTracked > 0) then {
 		_target = selectrandom _targetsNotTracked;
-		_target setVariable ["isTracked",true];
 
 		#ifdef DEBUG
 		systemChat format ["Target: %1, \nTracker: %2", _target, (_target getVariable ["isTracked",false]) ];
