@@ -98,5 +98,3 @@ while{alive _cram}do{
 	} else {sleep 2}; // SLEEP NO VALID TARGET
 
 };
-
-};
