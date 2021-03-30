@@ -8,6 +8,8 @@ Sofar only a script that is trying to bring anti artillery and rocket capabiliti
 
 To make this function you need to add to the local description.ext the following code:
 
+```c
 class CfgFunctions {
     #include "arma3_cram\CfgFunctions.hpp"
 };
+```
