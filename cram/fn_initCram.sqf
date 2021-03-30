@@ -13,7 +13,7 @@ if(isServer)then{
 		if(_x isKindOf FSG_SYSTEM && _x getVariable[FSG_IDENTIFIER,false]) then {
 //		if(_x isKindOf FSG_SYSTEM) then {
 //			if((side _x) == West)then{
-			[_x,FSG_RADARRANGE] call RR_fnc_addCram;
+			[_x,FSG_RADARRANGE] spawn RR_fnc_addCram;
 //			waitUntil {player == player};
 			systemChat "CRAM INIT FIRED";
 //			};
@@ -24,7 +24,7 @@ if(isServer)then{
 		_x addEventHandler["CuratorObjectPlaced",{
 			_obj = _this select 1;
 			if(_obj isKindOf FSG_SYSTEM && _obj getVariable[FSG_IDENTIFIER,false]) then {
-				[_obj, FSG_RADARRANGE]call FSG_fnc_addCram;
+				[_obj, FSG_RADARRANGE] spawn RR_fnc_addCram;
 			};
 		}];
 	}forEach FSG_CURATORS;
