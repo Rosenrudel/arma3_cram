@@ -10,32 +10,28 @@ _null = [_cram,_radarrange]spawn{
 	private _timeBetweenShots = 1 / (_rate / 60);
 	private _maxHeightIntercept = 30;
 	private _shellRegistry = [];
-	private _isDecending = velocity _x select 2 < 0; //INSPIRED BY YAX'S ITC MOD
-	private _canIntercept = getPosATL _x select 2 > _maxHeightIntercept; //INSPIRED BY YAX'S ITC MOD
+	private _isDecending = {velocity _this select 2 < 0}; //INSPIRED BY YAX'S ITC MOD
+	private _canIntercept = {getPosATL _this select 2 > _maxHeightIntercept}; //INSPIRED BY YAX'S ITC MOD
 	private _targetRegistry = [];
 	private _targetsNotTracked = [];
 	private _target = "";
 	private _playAlert = false;
-	private _handleCBATargetDebug = [];
 	private _salvos = 1;
 	private _shots = 0;
 	private _shotsMin = 100;
 	private _shotsMid = 200;
 	private _shotsMax = 300;
-	private _turretAngleMaxRight = _cram getRelDir _target < 0 + 55;
-	private _turretAngleMaxLeft = _cram getRelDir _target > 360 - 55;
-	private _withinTurretAngle = _turretAngleMaxLeft || _turretAngleMaxRight;
+	private _turretAngleMaxRight = {_cram getRelDir _target < 0 + 55};
+	private _turretAngleMaxLeft = {_cram getRelDir _target > 360 - 55};
+	private _withinTurretAngle = {call _turretAngleMaxLeft || call _turretAngleMaxRight};
 	systemChat format ["A CRAM HAS BEEN INITIALIZED AT %1", (mapGridPosition _cram)];
 	while{alive _cram}do{
 		
 		_salvos = 1; // RESET SALVOS
 		_shellRegistry = []; // RESET SHELLREGISTRY EMPTY
 
-		if !(isNil _handleCBATargetDebug) then {
-			_handleCBATargetDebug call CBA_fnc_deletePerFrameHandlerObject; // REMOVE CBA_PFH OBJECT LINE
-		};
-
-		_shellRegistry append (_cram nearObjects[("Rocketbase" || "ShellBase"),_radarrange]); // BETTER: ARRAY CHECK FOR IF CONDITION WITH LOOPING THROUGH BY VARIABLE
+		_shellRegistry append (_cram nearObjects["Rocketbase",_radarrange]); // BETTER: ARRAY CHECK FOR IF CONDITION WITH LOOPING THROUGH BY VARIABLE
+		_shellRegistry append (_cram nearObjects["ShellBase",_radarrange]);
 //		_shellRegistry append (_cram nearObjects["MissileBase",_radarrange]); // conflicting with line 27 for incoming shells or rockets
 
 		if(count _shellRegistry > 0) then {
@@ -43,7 +39,7 @@ _null = [_cram,_radarrange]spawn{
 			systemChat format ["SHELL: %1", _shellRegistry select 0]
 		};
 
-		_targetRegistry = _shellRegistry select {_canIntercept && _isDecending}; // INSPIRED BY YAX'S ITC MOD
+		_targetRegistry = _shellRegistry select {_x call _canIntercept && _x call _isDecending}; // INSPIRED BY YAX'S ITC MOD
 		
 		if(count _targetRegistry > 0) then {
 			systemChat "AN INTERCEPTABLE TARGET WAS REGISTERED";
@@ -63,15 +59,17 @@ _null = [_cram,_radarrange]spawn{
 			systemChat format ["Target: %1, \nTracker: %2", _target, (_target getVariable ["isTracked",false]) ];
 			_targetBoom = getText (configFile >> "CfgAmmo" >> typeOf _target >> "explosionEffects");
 			_shots = floor random [_shotsMin, _shotsMid, _shotsMax];
+
 			if (_playAlert == true) then {
-				playSound3D ["cram\cramwarning.ogg", _cram, false, getPosASL _cram, 10, 1, 0];
+				playSound3D ["arma3_cram\sound\cramwarning.ogg", _cram, false, getPosASL _cram, 10, 1, 0];
 			};
 			// Maybe rather like this?: _cram getDir _target < 0 + 55 || _cram getDir _target > 360 - 55;
 			//while {(alive _target) && (_dirTarget < (_fromTarget + 55)) && (_dirTarget > (_fromTarget - 55))} do {
-			while {(alive _target) && (_withinTurretAngle)} do {
+			while {(alive _target) && (call _withinTurretAngle)} do {
 				_distance = _target distance _cram;
 				_distance2D = _cram distance2D _target;
-				_handleCBATargetDebug = [{hint format ["Target: %1 \nSalvos: %2 \nDistance: %3 \nDistance2D: %4", _target, _salvos, _distance, _distance2D];}, 0.5, []] call CBA_fnc_addPerFrameHandler;
+
+				hintSilent format ["Target: %1 \nSalvos: %2 \nDistance: %3 \nDistance2D: %4", _target, _salvos, _distance, _distance2D];
 				if ((_target distance _cram < _rangeCramAttention) && (_target distance _cram > 50)) then {
 					_cram doWatch _target;
 					if ((_target distance _cram < _rangeCramEngage) && (_target distance _cram > 50) && (_cram weaponDirection (currentWeapon _cram)) select 2 > 0.20) then {
@@ -96,10 +94,9 @@ _null = [_cram,_radarrange]spawn{
 					};
 
 				};
-
 			};
 			
-		} else {sleep 1}; // SLEEP NO VALID TARGET
+		} else {sleep 2}; // SLEEP NO VALID TARGET
 
 	};
 
