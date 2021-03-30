@@ -5,9 +5,9 @@
 	@param _range	 - Range from which targets are aquiered
 	@param _minHeightIntercept - (opt.) Minimal height for a shell
  */
- params["_position", "_range", ["_minHeightIntercept", 30]];
+params["_position", "_range", ["_minHeightIntercept", 30]];
 
- #include "..\CfgDefines.hpp"
+#include "..\CfgDefines.hpp"
 
 private _shellRegistry = [];
 
@@ -37,4 +37,4 @@ if(count _targetRegistry > 0) then {
 };
 #endif
 
-_shellRegistry;
+_targetRegistry;
