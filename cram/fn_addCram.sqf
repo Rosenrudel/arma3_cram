@@ -20,6 +20,8 @@ private _turretAngleMaxRight = {_cram getRelDir _target < 0 + 55};
 private _turretAngleMaxLeft = {_cram getRelDir _target > 360 - 55};
 private _withinTurretAngle = {call _turretAngleMaxLeft || call _turretAngleMaxRight};
 
+_cram setAutonomous false;
+
 #ifdef DEBUG
 	systemChat format ["A CRAM HAS BEEN INITIALIZED AT %1", (mapGridPosition _cram)];
 #endif
@@ -28,7 +30,7 @@ private _withinTurretAngle = {call _turretAngleMaxLeft || call _turretAngleMaxRi
 while{alive _cram}do{
 	
 	_salvos = 1; // RESET SALVOS
-	_targetsNotTracked = [getPosATL _cram, _rangeCramAttention] call RR_fnc_discoverTargets; // RESET SHELLREGISTRY EMPTY
+	_targetsNotTracked = [getPosATL _cram, _rangeCramAttention] call RR_fnc_discoverTargets; // Get Targets
 
 	_cram doWatch objNull; //RESET ORIENTATION FRONT IF NO VALID TARGET
 
