@@ -3,8 +3,8 @@ params["_cram","_radarrange"];
 #include "..\CfgDefines.hpp"
 
 private _rate =	4615;
-private _rangeCramAttention = 4000;
-private _rangeCramEngage = 1500;
+private _rangeCramAttention = 7000;
+private _rangeCramEngage = 2000;
 private _timeBetweenShots = 1 / (_rate / 60);
 private _maxHeightIntercept = 30;
 private _targetRegistry = [];
@@ -56,18 +56,22 @@ while{alive _cram}do{
 		#endif
 
 		waitUntil{
-			if (!((alive _target) && (call _withinTurretAngle))) exitWith {contine};
+			if (!((alive _target) && (call _withinTurretAngle))) exitWith {true};
 
 			(_target distance _cram < _rangeCramAttention) && (_target distance _cram > 50);
 		};
 
+		if (!((alive _target) && (call _withinTurretAngle))) then {continue};
+
 		_cram doWatch _target;
 
 		waitUntil{
-			if (!((alive _target) && (call _withinTurretAngle))) exitWith {contine};
+			if (!((alive _target) && (call _withinTurretAngle))) exitWith {true};
 
 			(_target distance _cram < _rangeCramEngage) && (_target distance _cram > 50) && (_cram weaponDirection (currentWeapon _cram)) select 2 > 0.1;
 		};
+
+		if (!((alive _target) && (call _withinTurretAngle))) then {continue};
 
 		// Create Hitbox with 2x2x2
 		_dummy = createVehicle ["ProtectionZone_Invisible_F", [0, 0, 0]];
