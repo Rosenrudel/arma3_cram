@@ -48,15 +48,16 @@ while{alive _cram}do{
 			playSound3D ["arma3_cram\sound\cramwarning.ogg", _cram, false, getPosASL _cram, 10, 1, 0];
 		#endif
 
+		#ifdef DEBUG
+			if (call _withinTurretAngle) then
+			{
+				[_cram, _target] spawn RR_fnc_targetDebug;
+			};
+		#endif
+
 		// Maybe rather like this?: _cram getDir _target < 0 + 55 || _cram getDir _target > 360 - 55;
 		//while {(alive _target) && (_dirTarget < (_fromTarget + 55)) && (_dirTarget > (_fromTarget - 55))} do {
 		while {(alive _target) && (call _withinTurretAngle)} do {
-			_distance = _target distance _cram;
-			_distance2D = _target distance2D _cram;
-
-			#ifdef DEBUG
-				hintSilent format ["Target: %1 \nSalvos: %2 \nDistance: %3 \nDistance2D: %4", _target, _salvos, _distance, _distance2D];
-			#endif
 
 			if ((_target distance _cram < _rangeCramAttention) && (_target distance _cram > 50)) then {
 				_cram doWatch _target;

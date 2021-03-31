@@ -17,5 +17,7 @@ class RR_CRAM
 		class shootTarget {};
 
 		class destroyTarget {};
+
+		class targetDebug {};
 	}
 };
