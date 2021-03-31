@@ -57,35 +57,38 @@ while{alive _cram}do{
 
 		// Maybe rather like this?: _cram getDir _target < 0 + 55 || _cram getDir _target > 360 - 55;
 		//while {(alive _target) && (_dirTarget < (_fromTarget + 55)) && (_dirTarget > (_fromTarget - 55))} do {
-		while {(alive _target) && (call _withinTurretAngle)} do {
 
-			if ((_target distance _cram < _rangeCramAttention) && (_target distance _cram > 50)) then {
-				_cram doWatch _target;
+		waitUntil{
+			if (!((alive _target) && (call _withinTurretAngle))) exitWith {contine};
 
-				if ((_target distance _cram < _rangeCramEngage) && (_target distance _cram > 50) && (_cram weaponDirection (currentWeapon _cram)) select 2 > 0.1) then {
-					
-					// Create Hitbox with 2x2x2
-					_dummy = createVehicle ["ProtectionZone_Invisible_F", [0, 0, 0]];
-					_dummy attachTo [_target, [0, 0, 0]];
-					_dummy setObjectScale 0.05;
-					
-					// Create visible 
-					#ifdef DEBUG
-						_test = createVehicle ["Sign_Sphere200cm_F", [0, 0, 0]];
-						_test attachTo [_target, [0, 0, 0]];
-					#endif
-
-					_dummy addEventHandler ["HitPart", {
-						_dummy = (_this select 0) select 0;
-						[attachedTo _dummy] call RR_fnc_destroyTarget;
-					}];
-
-					[_cram, _target, 250, _timeBetweenShots] call RR_fnc_shootTarget;
-				};
-
-			};
+			(_target distance _cram < _rangeCramAttention) && (_target distance _cram > 50);
 		};
+
+		_cram doWatch _target;
+
+		waitUntil{
+			if (!((alive _target) && (call _withinTurretAngle))) exitWith {contine};
+
+			(_target distance _cram < _rangeCramEngage) && (_target distance _cram > 50) && (_cram weaponDirection (currentWeapon _cram)) select 2 > 0.1;
+		};
+
+		// Create Hitbox with 2x2x2
+		_dummy = createVehicle ["ProtectionZone_Invisible_F", [0, 0, 0]];
+		_dummy attachTo [_target, [0, 0, 0]];
+		_dummy setObjectScale 0.05;
+		
+		// Create visible 
+		#ifdef DEBUG
+			_test = createVehicle ["Sign_Sphere200cm_F", [0, 0, 0]];
+			_test attachTo [_target, [0, 0, 0]];
+		#endif
+
+		_dummy addEventHandler ["HitPart", {
+			_dummy = (_this select 0) select 0;
+			[attachedTo _dummy] call RR_fnc_destroyTarget;
+		}];
+
+		[_cram, _target, 250, _timeBetweenShots] call RR_fnc_shootTarget;
 		
 	} else {sleep 2}; // SLEEP NO VALID TARGET
-
 };

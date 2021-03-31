@@ -13,12 +13,9 @@ params["_turret", "_target"];
 		private _turret = (_this select 0) select 0;
 		private _target = (_this select 0) select 1;
 
-		systemChat str _this;
-
 		if(isNull _target) then
 		{
 			[_this select 1] call CBA_fnc_removePerFrameHandler;
-			systemChat "HALLO"
 		}else
 		{
 			private _distance = _turret distance _target;
