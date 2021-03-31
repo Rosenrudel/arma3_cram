@@ -12,5 +12,10 @@ class RR_CRAM
 	{
 		file = "arma3_cram\generic";
 		class discoverTargets {};
+
+		class calcLead {};
+		class shootTarget {};
+
+		class destroyTarget {};
 	}
 };

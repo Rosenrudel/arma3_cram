@@ -14,4 +14,4 @@ private _travelTime = (_turret distance _target)/_bulletVelocity;
 
 private _leadVector = (velocity _target) vectorMultiply _travelTime;
 
-(getPosATL _target) vectorAdd _leadVector;
+(getPos _target) vectorAdd _leadVector;

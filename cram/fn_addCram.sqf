@@ -41,7 +41,7 @@ while{alive _cram}do{
 		systemChat format ["Target: %1, \nTracker: %2", _target, (_target getVariable ["isTracked",false]) ];
 		#endif
 
-		_targetBoom = getText (configFile >> "CfgAmmo" >> typeOf _target >> "explosionEffects");
+		
 		_shots = floor random [_shotsMin, _shotsMid, _shotsMax];
 
 		#ifdef AUDIO_WARNING
@@ -82,14 +82,9 @@ while{alive _cram}do{
 				
 					_salvos = _salvos -1;
 					if (_salvos == 0) then {
-						"helicopterexplosmall" createVehicle (getPos _target);
-						_targetBoom createVehicle (getPos _target);
-						deleteVehicle _target;
-						deleteVehicle _dummy;
-
-						#ifdef DEBUG
-						systemChat "CRAM HAS DESTROYED A VALID TARGET";
-						#endif
+						
+						[_target] call RR_fnc_destroyTarget;
+						
 					};
 
 				};
