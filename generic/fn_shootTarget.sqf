@@ -26,7 +26,8 @@ _handle = [
 // Wait for the turret to be on target
 sleep 2;
 
-while {alive _target} do
+// Repeat until target is not longer alive or not longer in allowed angle zone
+while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select 2 > 0.1} do
 {
 	for [{private _i = 0}, {_i < _shots && alive _target}, {_i = _i +1}] do
 	{
