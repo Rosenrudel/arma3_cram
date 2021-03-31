@@ -3,7 +3,7 @@ params["_cram","_radarrange"];
 #include "..\CfgDefines.hpp"
 
 private _rate =	4615;
-private _rangeCramAttention = 3000;
+private _rangeCramAttention = 4000;
 private _rangeCramEngage = 1500;
 private _timeBetweenShots = 1 / (_rate / 60);
 private _maxHeightIntercept = 30;
@@ -54,9 +54,6 @@ while{alive _cram}do{
 				[_cram, _target] spawn RR_fnc_targetDebug;
 			};
 		#endif
-
-		// Maybe rather like this?: _cram getDir _target < 0 + 55 || _cram getDir _target > 360 - 55;
-		//while {(alive _target) && (_dirTarget < (_fromTarget + 55)) && (_dirTarget > (_fromTarget - 55))} do {
 
 		waitUntil{
 			if (!((alive _target) && (call _withinTurretAngle))) exitWith {contine};
