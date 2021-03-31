@@ -16,26 +16,25 @@ _handle = [
 	private _turret = (_this select 0) select 0;
 	private _target = (_this select 0) select 1;
 
-	_lead = [_turret, _target, 1000] call RR_fnc_calcLead;
+	_lead = [_turret, _target, 1200] call RR_fnc_calcLead;
 	_turret lookAt _lead;
 	},
 	0,
 	[_turret, _target]
 ] call CBA_fnc_addPerFrameHandler;
 
+// Wait for the turret to be on target
 sleep 2;
 
-for [{private _i = 0}, {_i < _shots && alive _target}, {_i = _i +1}] do
+while {alive _target} do
 {
-	[_turret, currentWeapon _turret] call BIS_fnc_fire;
-
-	// TODO: Implement random function to determine hit
-	if (false) then
+	for [{private _i = 0}, {_i < _shots && alive _target}, {_i = _i +1}] do
 	{
-		[_turret] call RR_fnc_destroyTarget;
+		[_turret, currentWeapon _turret] call BIS_fnc_fire;
+		sleep _timeBetweenShots;
 	};
 
-	sleep _timeBetweenShots;
+	sleep 2;
 };
 
 [_handle] call CBA_fnc_removePerFrameHandler;

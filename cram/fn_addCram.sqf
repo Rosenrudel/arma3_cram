@@ -62,23 +62,24 @@ while{alive _cram}do{
 				_cram doWatch _target;
 
 				if ((_target distance _cram < _rangeCramEngage) && (_target distance _cram > 50) && (_cram weaponDirection (currentWeapon _cram)) select 2 > 0.1) then {
-					// _cram aimedAtTarget [_target, (currentWeapon _cram)] > 0.9 ???
-
-					_dummy = createVehicle ["CBA_B_InvisibleTargetAir", [0, 0, 0]];
+					
+					// Create Hitbox with 2x2x2
+					_dummy = createVehicle ["ProtectionZone_Invisible_F", [0, 0, 0]];
 					_dummy attachTo [_target, [0, 0, 0]];
+					_dummy setObjectScale 0.05;
+					
+					// Create visible 
+					#ifdef DEBUG
+						_test = createVehicle ["Sign_Sphere200cm_F", [0, 0, 0]];
+						_test attachTo [_target, [0, 0, 0]];
+					#endif
 
-					_test = createVehicle ["Sign_Sphere200cm_F", [0, 0, 0]];
-					_test attachTo [_target, [0, 0, 0]];
+					_dummy addEventHandler ["HitPart", {
+						_dummy = (_this select 0) select 0;
+						[attachedTo _dummy] call RR_fnc_destroyTarget;
+					}];
 
 					[_cram, _target, 250, _timeBetweenShots] call RR_fnc_shootTarget;
-				
-					_salvos = _salvos -1;
-					if (_salvos == 0) then {
-						
-						[_target] call RR_fnc_destroyTarget;
-						
-					};
-
 				};
 
 			};
