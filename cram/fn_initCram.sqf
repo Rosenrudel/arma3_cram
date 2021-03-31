@@ -3,7 +3,7 @@ if(isServer)then{
 // CONFIGURATION
 	FSG_DEBUG = true; //Show debug info
 	FSG_CURATORS = []; //Add game masters here or "allCurators". This will cause any Turret placed to turn from CIWS into a C-RAM. >UNDESIRABLE<!
-	FSG_RADARRANGE = 5000; //Distance to scan for projectiles per CRAM
+	FSG_RADARRANGE = 7000; //Distance to scan for projectiles per CRAM
 	FSG_SYSTEM = "B_AAA_System_01_F"; //The type of weapon system you want to apply CRAM function to
 	FSG_IDENTIFIER = "isCram"; // Place in object init: this setVariable["isCram", true];
 

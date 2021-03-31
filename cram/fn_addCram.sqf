@@ -3,7 +3,7 @@ params["_cram","_radarrange"];
 #include "..\CfgDefines.hpp"
 
 private _rate =	4615;
-private _rangeCramAttention = 3000;
+private _rangeCramAttention = 4000;
 private _rangeCramEngage = 1500;
 private _timeBetweenShots = 1 / (_rate / 60);
 private _maxHeightIntercept = 30;
