@@ -8,7 +8,7 @@
         <img src="https://img.shields.io/badge/CBA-blue.svg" alt="CBA">
     </a>
     <a href="https://github.com/PaxJaromeMalues/arma3_cram/issues">
-        <img src="https://img.shields.io/github/issues-raw/PaxJaromeMalues/uo_enhanced_briefing_preset.svg?label=Issues" alt="Issues">
+        <img src="https://img.shields.io/github/issues-raw/PaxJaromeMalues/arma3_cram.svg?label=Issues" alt="Issues">
     </a>
     <a href="https://arma3.rosenrudel.de/">
         <img src="https://img.shields.io/badge/RR-ARMA-lightgrey.svg?colorA=B19E71&colorB=1A6BB6" alt="RR">
