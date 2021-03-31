@@ -55,9 +55,6 @@ while{alive _cram}do{
 			};
 		#endif
 
-		// Maybe rather like this?: _cram getDir _target < 0 + 55 || _cram getDir _target > 360 - 55;
-		//while {(alive _target) && (_dirTarget < (_fromTarget + 55)) && (_dirTarget > (_fromTarget - 55))} do {
-
 		waitUntil{
 			if (!((alive _target) && (call _withinTurretAngle))) exitWith {contine};
 
