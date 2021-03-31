@@ -70,15 +70,7 @@ while{alive _cram}do{
 					_test = createVehicle ["Sign_Sphere200cm_F", [0, 0, 0]];
 					_test attachTo [_target, [0, 0, 0]];
 
-					while {_shots > 0} do {
-						_cram doWatch _dummy;
-						_handle = _cram fireAtTarget [_dummy, currentWeapon _cram];
-
-						waitUntil {_cram doWatch _dummy; _handle}; 
-
-						_shots=_shots-1;
-						sleep _timeBetweenShots;
-					};
+					[_cram, _target, 250, _timeBetweenShots] call RR_fnc_shootTarget;
 				
 					_salvos = _salvos -1;
 					if (_salvos == 0) then {
