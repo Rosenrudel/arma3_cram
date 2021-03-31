@@ -6,12 +6,12 @@
 	@param cram - The initialized cram unit.
  */
 
-params['_cram', ];
+params['_cram'];
 
-private _cram
+private _cram = _this select 0;
+private _localDistanceCrams = 200;
+private _localCramPool = [];
+private _localCramPool = _localCramPool append [_cram];
+private _localCramDetectionObject = poolObject;
 
 
-
-#ifdef DEBUG
-	systemChat "CRAM HAS DESTROYED A VALID TARGET";
-#endif
