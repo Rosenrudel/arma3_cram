@@ -35,7 +35,7 @@ while{alive _cram}do{
 	_cram doWatch objNull; //RESET ORIENTATION FRONT IF NO VALID TARGET
 
 	if(count _targetsNotTracked > 0) then {
-		_target = selectrandom _targetsNotTracked;
+		_target = [_targetsNotTracked, [getPos _cram], {_input0 distance _x}] call BIS_fnc_sortBy select 0;
 
 		#ifdef DEBUG
 		systemChat format ["Target: %1, \nTracker: %2", _target, (_target getVariable ["isTracked",false]) ];
