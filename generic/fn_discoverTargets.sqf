@@ -13,6 +13,7 @@ private _shellRegistry = [];
 
 // Discover Rockets
 _shellRegistry append (_cram nearObjects["Rocketbase",_range]);
+_shellRegistry append (_cram nearObjects["SubmunitionBase",_range]);
 
 // Discover Artillery Shells
 _shellRegistry append (_cram nearObjects["ShellBase",_range]);

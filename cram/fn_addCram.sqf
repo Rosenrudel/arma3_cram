@@ -73,7 +73,7 @@ while{alive _cram}do{
 
 		if (!((alive _target) && (call _withinTurretAngle))) then {continue};
 
-		// Create Hitbox with 2x2x2
+		// Create Hitbox with 2x2x2 
 		_dummy = createVehicle ["ProtectionZone_Invisible_F", [0, 0, 0]];
 		_dummy attachTo [_target, [0, 0, 0]];
 		_dummy setObjectScale 0.05;
@@ -89,7 +89,7 @@ while{alive _cram}do{
 			[attachedTo _dummy] call RR_fnc_destroyTarget;
 		}];
 
-		[_cram, _target, 250, _timeBetweenShots] call RR_fnc_shootTarget;
+		[_cram, _target, _dummy, 250, _timeBetweenShots] call RR_fnc_shootTarget;
 		
-	} else {sleep 2}; // SLEEP NO VALID TARGET
+	} else {sleep 1}; // SLEEP NO VALID TARGET
 };

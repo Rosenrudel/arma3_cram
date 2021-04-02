@@ -3,11 +3,12 @@
 
 	@param _turret - Turret to shoot with
 	@param _target - Target to shoot at
+	@param _dummy  - Hitbox
 	@param _shots  - Amount of shots
 	@param _timeBetweenShots - Time between two shots
  */
 
-params['_turret', '_target', '_shots', '_timeBetweenShots'];
+params['_turret', '_target', '_dummy','_shots', '_timeBetweenShots'];
 
 #include "..\CfgDefines.hpp"
 
@@ -30,7 +31,10 @@ sleep 2;
 while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select 2 > 0.1} do
 {
 	for [{private _i = 0}, {_i < _shots && alive _target}, {_i = _i +1}] do
-	{
+	{	
+		// Force position synchronization for the hitbox
+		_dummy setPos getPos _target;
+		
 		[_turret, currentWeapon _turret] call BIS_fnc_fire;
 		sleep _timeBetweenShots;
 	};
