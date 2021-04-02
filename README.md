@@ -29,6 +29,14 @@ class CfgFunctions {
 };
 ```
 
+**Wanted Functionality**
+
+Integrated:
+<img src="https://i.imgur.com/B9lKGW8.png">
+
+Networked:
+<img src="https://i.imgur.com/bIpXPfl.png">
+
 **Roadmap:**
 
 ```
