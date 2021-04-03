@@ -3,15 +3,9 @@ class RR_CRAM
 	tag = "RR";
 	class CRAM
 	{
-		file = "arma3_cram\cram"
+		file = "arma3_cram\functions\cram"
 		class initCram {};
 		class addCram {};
-	};
-
-	class Generic
-	{
-		file = "arma3_cram\generic";
-		class discoverTargets {};
 
 		class calcLead {};
 		class shootTarget {};
@@ -19,5 +13,18 @@ class RR_CRAM
 		class destroyTarget {};
 
 		class targetDebug {};
+	};
+
+	class Generic
+	{
+		file = "arma3_cram\functions\radar";
+		class discoverTargets {};
+	}
+
+	class Speaker
+	{
+		file = "arma3_cram\functions\speaker";
+		class addSpeaker;
+		class playAlarm;
 	}
 };

@@ -6,7 +6,7 @@
 
 params['_target'];
 
-#include "..\CfgDefines.hpp"
+#include "..\..\CfgDefines.hpp"
 
 private _targetBoom = getText (configFile >> "CfgAmmo" >> typeOf _target >> "explosionEffects");
 

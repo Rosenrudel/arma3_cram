@@ -10,7 +10,7 @@
 
 params['_turret', '_target', '_dummy','_shots', '_timeBetweenShots'];
 
-#include "..\CfgDefines.hpp"
+#include "..\..\CfgDefines.hpp"
 
 _handle = [
 	{

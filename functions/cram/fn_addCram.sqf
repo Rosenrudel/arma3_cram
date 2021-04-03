@@ -1,6 +1,6 @@
 params["_cram","_radarrange"];
 
-#include "..\CfgDefines.hpp"
+#include "..\..\CfgDefines.hpp"
 
 private _rate =	4615;
 private _rangeCramAttention = 7000;

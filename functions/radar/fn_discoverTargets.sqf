@@ -7,7 +7,7 @@
  */
 params["_position", "_range", ["_minHeightIntercept", 30]];
 
-#include "..\CfgDefines.hpp"
+#include "..\..\CfgDefines.hpp"
 
 private _shellRegistry = [];
 
