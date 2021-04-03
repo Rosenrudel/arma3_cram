@@ -37,7 +37,7 @@ waitUntil{
 	sleep 0.2; 
 	_toTarget = (getPos _target) vectorDiff (getPos _turret);
 	_aim = _turret weaponDirection currentWeapon _turret;
-	acos(_toTarget vectorCos _aim) < 10;
+	acos(_toTarget vectorCos _aim) < 5;
 };
 
 // Repeat until target is not longer alive or not longer in allowed angle zone
