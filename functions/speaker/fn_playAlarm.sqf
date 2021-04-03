@@ -19,8 +19,6 @@ _speaker spawn {
 		_range = _this getVariable "RR_CRAM_SPEAKER_RANGE";
 		[_this, [_sound, _range]] remoteExec ["say3D"];
 
-		systemChat str (_this getVariable "RR_CRAM_SPEAKER_SOUND_LENGTH");
-
 		sleep (_this getVariable "RR_CRAM_SPEAKER_SOUND_LENGTH");
 
 		_this setVariable ["RR_CRAM_SPEAKER_BUSY", false];
