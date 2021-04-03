@@ -10,12 +10,18 @@ params['_speaker'];
 
 if ((_speaker getVariable ["RR_CRAM_SPEAKER_BUSY", true])) exitWith {};
 
+
+
 _speaker spawn {
 		_this setVariable ["RR_CRAM_SPEAKER_BUSY", true];
 
 		_sound = _this getVariable "RR_CRAM_SPEAKER_SOUND";
 		_range = _this getVariable "RR_CRAM_SPEAKER_RANGE";
 		[_this, [_sound, _range]] remoteExec ["say3D"];
+
+		systemChat str (_this getVariable "RR_CRAM_SPEAKER_SOUND_LENGTH");
+
+		sleep (_this getVariable "RR_CRAM_SPEAKER_SOUND_LENGTH");
 
 		_this setVariable ["RR_CRAM_SPEAKER_BUSY", false];
 };

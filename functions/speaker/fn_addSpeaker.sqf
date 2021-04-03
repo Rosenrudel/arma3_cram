@@ -6,10 +6,11 @@
 	@param alarmRange - Alarm sound range
  */
 
-params['_speaker', ['_alarmSound', "CramWarning"], ['_alarmRange', 100]];
+params['_speaker', ['_alarmSound', "CramWarning"], ['_alarmLength', 9.5], ['_alarmRange', 100]];
 
 _speaker setVariable ["RR_CRAM_SPEAKER_BUSY", false];
 _speaker setVariable ["RR_CRAM_SPEAKER_SOUND", _alarmSound];
+_speaker setVariable ["RR_CRAM_SPEAKER_SOUND_LENGTH", _alarmLength];
 _speaker setVariable ["RR_CRAM_SPEAKER_RANGE", _alarmRange];
 
 #ifdef DEBUG
