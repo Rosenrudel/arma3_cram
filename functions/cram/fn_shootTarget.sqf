@@ -32,7 +32,13 @@ _handle = [
 ] call CBA_fnc_addPerFrameHandler;
 
 // Wait for the turret to be on target
-sleep 4; // Doubled as per last video logon required a tad bit more time
+sleep 1;
+waitUntil{
+	sleep 0.2; 
+	_toTarget = (getPos _target) vectorDiff (getPos _turret);
+	_aim = _turret weaponDirection currentWeapon _turret;
+	acos(_toTarget vectorCos _aim) < 10;
+};
 
 // Repeat until target is not longer alive or not longer in allowed angle zone
 while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select 2 > _groundUpAngle} do

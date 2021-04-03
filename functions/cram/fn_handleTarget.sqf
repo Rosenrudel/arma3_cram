@@ -25,12 +25,11 @@ private _unregisterTarget = {
 	missionNamespace setVariable ["RR_CRAM_TRACKED", _tracked - [_target]];
 };
 private _shots = floor random _shotRange;
-private _alarmSoundRange = 100; //meters
 private _dummyObjectScale = 0.05;
 
 #ifdef AUDIO_WARNING
 	_cram spawn {
-		[_this, ["CramWarning", _alarmSoundRange]] remoteExec ["say3D"];
+		[_this, ["CramWarning", 100]] remoteExec ["say3D"];
 	};
 #endif
 

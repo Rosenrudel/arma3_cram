@@ -49,9 +49,10 @@ _handle = [
 				_target = (([_targetsNotTracked, [_currentCram], {_input0 distance _x}] call BIS_fnc_sortBy)) select 0;
 
 				_trackedTargets = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
-				missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets append [_target], true];
+				_trackedTargets append [_target];
+				missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets, true];
 
-				_targetsNotTracked = _targetsNotTracked deleteAt (_targetsNotTracked find _target);
+				_targetsNotTracked deleteAt (_targetsNotTracked find _target);
 
 				[_x, _target] spawn RR_fnc_handleTarget;
 
@@ -66,5 +67,5 @@ _handle = [
 		if (!alive _radar) then { [_this select 1] call CBA_fnc_removePerFrameHandler; }
 	},
 	0.5,
-	[_radar, _crams, _radarrange, _trackedTargets]
+	[_radar, _crams, _radarrange]
 ] call CBA_fnc_addPerFrameHandler;
