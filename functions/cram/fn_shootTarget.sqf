@@ -29,7 +29,7 @@ _handle = [
 ] call CBA_fnc_addPerFrameHandler;
 
 // Wait for the turret to be on target
-sleep 2;
+sleep 4; // Doubled as per last video logon required a tad bit more time
 
 // Repeat until target is not longer alive or not longer in allowed angle zone
 while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select 2 > 0.1} do
