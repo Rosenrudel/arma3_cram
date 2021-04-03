@@ -12,13 +12,16 @@ params['_turret', '_target', '_dummy','_shots', '_timeBetweenShots'];
 
 #include "..\..\CfgDefines.hpp"
 
+private _groundUpAngle = 0.17;
+private _interceptSpeedPreset = 1200;
+
 _handle = [
 	{
 	private _turret = (_this select 0) select 0;
 	private _target = (_this select 0) select 1;
 	private _dummy = (_this select 0) select 2;
 
-	_lead = [_turret, _target, 1200] call RR_fnc_calcLead;
+	_lead = [_turret, _target, _interceptSpeedPreset] call RR_fnc_calcLead;
 	_turret lookAt _lead;
 
 	// Delete the hitbox if the target is to low
@@ -32,7 +35,7 @@ _handle = [
 sleep 4; // Doubled as per last video logon required a tad bit more time
 
 // Repeat until target is not longer alive or not longer in allowed angle zone
-while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select 2 > 0.1} do
+while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select 2 > _groundUpAngle} do
 {
 	for [{private _i = 0}, {_i < _shots && alive _target}, {_i = _i +1}] do
 	{	
