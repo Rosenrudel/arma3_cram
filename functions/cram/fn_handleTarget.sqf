@@ -30,7 +30,9 @@ private _unregisterTarget = {
 private _shots = floor random _shotRange;
 
 #ifdef AUDIO_WARNING
-	playSound3D ["arma3_cram\sound\cramwarning.ogg", _cram, false, getPosASL _cram, 10, 1, 0];
+	_cram spawn {
+		[_this, ["CramWarning", 100]] remoteExec ["say3D"];
+	};
 #endif
 
 #ifdef DEBUG
