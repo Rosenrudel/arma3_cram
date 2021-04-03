@@ -20,7 +20,7 @@ private _radarrange = getNumber (configfile >> "CfgVehicles" >> typeOf _radar >>
 
 if (isNull _cram) then
 {
-	_cram = synchronizedObjects _radar;
+	_crams = synchronizedObjects _radar;
 }else
 {
 	_crams = [_cram]
@@ -31,19 +31,28 @@ _handle = [
 		_radar = (_this select 0) select 0;
 		_crams  = (_this select 0) select 1;
 		_radarrange = (_this select 0) select 2;
+		
+		_trackedTargets = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
+		missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets - [objNull], true];
 
 		// Get possible targets
-		_targetsNotTracked = [getPosATL _radar, _radarrange] call RR_fnc_discoverTargets;
+		_targetsNotTracked = ([getPosATL _radar, _radarrange] call RR_fnc_discoverTargets) select {!(_x in (missionNamespace getVariable ["RR_CRAM_TRACKED", []]))};
 		// Get free crams
 		_freeCrams = _crams select {!(_x getVariable ["RR_CRAM_BUSY", true])};
 
 		// Distribute Targets between the crams
 		{
 			_currentCram = _x;
-
+			
 			if (count _targetsNotTracked > 0) then
 			{
-				_target = ([_targetsNotTracked, [getPos _currentCram], {_input0 distance _x}] call BIS_fnc_sortBy) select 0;
+				_target = (([_targetsNotTracked, [_currentCram], {_input0 distance _x}] call BIS_fnc_sortBy)) select 0;
+
+				_trackedTargets = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
+				missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets + [_target], true];
+
+				_targetsNotTracked = _targetsNotTracked - [_target];
+
 				[_x, _target] spawn RR_fnc_handleTarget;
 
 				#ifdef DEBUG
@@ -56,6 +65,6 @@ _handle = [
 		// Remove event handler if the radar is dead
 		if (!alive _radar) then { [_this select 1] call CBA_fnc_removePerFrameHandler; }
 	},
-	1,
-	[_radar, _crams, _radarrange]
+	0.5,
+	[_radar, _crams, _radarrange, _trackedTargets]
 ] call CBA_fnc_addPerFrameHandler;
