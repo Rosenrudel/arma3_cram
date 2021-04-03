@@ -4,7 +4,7 @@
 	@param _radar - Radar object
 	@param _cram  - Cram object
  */
-params['_radar', ['_cram', objNull]];
+params['_radar', ['_cram', objNull], ['_speaker', []]];
 
 #include "..\..\CfgDefines.hpp"
 
@@ -26,6 +26,12 @@ if (isNull _cram) then
 	_crams = [_cram]
 };
 
+_radar setVariable ["RR_CRAM_RADAR_Speaker", _speaker];
+{
+	[_x] call RR_fnc_addSpeaker;
+} forEach _speaker;
+
+
 _handle = [
 	{
 		_radar = (_this select 0) select 0;
@@ -39,6 +45,14 @@ _handle = [
 		_targetsNotTracked = ([getPosATL _radar, _radarrange] call RR_fnc_discoverTargets) select {!(_x in (missionNamespace getVariable ["RR_CRAM_TRACKED", []]))};
 		// Get free crams
 		_freeCrams = _crams select {!(_x getVariable ["RR_CRAM_BUSY", true])};
+
+		if (count _targetsNotTracked > 0) then
+		{
+			{
+				[_x] call RR_fnc_playAlarm;
+				
+			} forEach (_radar getVariable ["RR_CRAM_RADAR_Speaker", []]);
+		};
 
 		// Distribute Targets between the crams
 		{

@@ -26,7 +26,7 @@ class RR_CRAM
 	class Speaker
 	{
 		file = "arma3_cram\functions\speaker";
-		class addSpeaker;
-		class playAlarm;
+		class addSpeaker {};
+		class playAlarm {};
 	}
 };

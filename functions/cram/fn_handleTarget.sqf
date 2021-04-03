@@ -28,9 +28,10 @@ private _shots = floor random _shotRange;
 private _dummyObjectScale = 0.05;
 
 #ifdef AUDIO_WARNING
-	_cram spawn {
-		[_this, ["CramWarning", 100]] remoteExec ["say3D"];
-	};
+	{
+		[_x] call RR_fnc_playAlarm;
+		
+	} forEach (_cram getVariable ["RR_CRAM_Speaker", []]);
 #endif
 
 #ifdef DEBUG

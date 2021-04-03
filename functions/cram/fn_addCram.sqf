@@ -1,4 +1,13 @@
-params["_cram", ["_rate", 4615], ["_alone", true]];
+/**
+	Initialises a cram object
+
+	@param _cram - Cram object
+	@param _rate - Firerate of the cram
+	@param _alone - If the cram object should operate indepentently
+	@param _speaker - A list of all speaker objects for the cram
+ */
+
+params["_cram", ["_rate", 4615], ["_alone", true], ["_speaker", []]];
 
 #include "..\..\CfgDefines.hpp"
 
@@ -21,4 +30,17 @@ _cram setVariable ["RR_CRAM_BUSY", false];
 if (_alone) then
 {
 	[_cram, _cram] call RR_fnc_addRadar;
-}
+};
+
+if (_alone) then
+{
+	_cram setVariable ["RR_CRAM_Speaker", [_cram]];
+	[_cram] call RR_fnc_addSpeaker;
+
+}else
+{
+	_cram setVariable ["RR_CRAM_Speaker", _speaker];
+	{
+		[_x] call RR_fnc_addSpeaker;
+	} forEach _speaker;
+};
