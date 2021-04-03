@@ -22,6 +22,11 @@ private _turretAngleMaxRight = {_cram getRelDir _target < 0 + 55};
 private _turretAngleMaxLeft = {_cram getRelDir _target > 360 - 55};
 private _withinTurretAngle = {call _turretAngleMaxLeft || call _turretAngleMaxRight};
 
+private _unregisterTarget = {
+	_tracked = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
+	missionNamespace setVariable ["RR_CRAM_TRACKED", _tracked - [_target]];
+};
+
 private _shots = floor random _shotRange;
 
 #ifdef AUDIO_WARNING
@@ -41,7 +46,10 @@ waitUntil{
 	(_target distance _cram < _rangeCramAttention) && (_target distance _cram > 50);
 };
 
-if (!((alive _target) && (call _withinTurretAngle))) exitWith {_cram setVariable ["RR_CRAM_BUSY", false];};
+if (!((alive _target) && (call _withinTurretAngle))) exitWith {
+	call _unregisterTarget;
+	_cram setVariable ["RR_CRAM_BUSY", false];
+};
 
 _cram doWatch _target;
 
@@ -53,6 +61,7 @@ waitUntil{
 
 if (!((alive _target) && (call _withinTurretAngle))) exitWith {
 	_cram doWatch objNull;
+	call _unregisterTarget;
 	_cram setVariable ["RR_CRAM_BUSY", false];
 };
 
@@ -75,4 +84,5 @@ _dummy addEventHandler ["HitPart", {
 [_cram, _target, _dummy, 250, _timeBetweenShots] call RR_fnc_shootTarget;
 
 _cram doWatch objNull;
+call _unregisterTarget;
 _cram setVariable ["RR_CRAM_BUSY", false];
