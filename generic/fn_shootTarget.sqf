@@ -16,12 +16,16 @@ _handle = [
 	{
 	private _turret = (_this select 0) select 0;
 	private _target = (_this select 0) select 1;
+	private _dummy = (_this select 0) select 2;
 
 	_lead = [_turret, _target, 1200] call RR_fnc_calcLead;
 	_turret lookAt _lead;
+
+	// Delete the hitbox if the target is to low
+	if (getPosATL _target select 2 < 10) then { deleteVehicle _dummy; }
 	},
 	0,
-	[_turret, _target]
+	[_turret, _target, _dummy]
 ] call CBA_fnc_addPerFrameHandler;
 
 // Wait for the turret to be on target
