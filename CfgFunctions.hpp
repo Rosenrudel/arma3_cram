@@ -4,8 +4,9 @@ class RR_CRAM
 	class CRAM
 	{
 		file = "arma3_cram\functions\cram"
-		class initCram {};
 		class addCram {};
+
+		class handleTarget {};
 
 		class calcLead {};
 		class shootTarget {};
@@ -15,9 +16,10 @@ class RR_CRAM
 		class targetDebug {};
 	};
 
-	class Generic
+	class Radar
 	{
 		file = "arma3_cram\functions\radar";
+		class addRadar {};
 		class discoverTargets {};
 	}
 
