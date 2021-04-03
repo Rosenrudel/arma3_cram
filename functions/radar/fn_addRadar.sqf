@@ -14,7 +14,7 @@ private _crams = [];
 private _radarrange = getNumber (configfile >> "CfgVehicles" >> typeOf _radar >> "Components" >> "SensorsManagerComponent" >> "Components" >> "ActiveRadarSensorComponent" >> "typeRecognitionDistance");
 
 #ifdef DEBUG
-	systemChat format ["A RADAR HAS BEEN INITIALIZED AT %1 WITH RANGE %2", (mapGridPosition _cram), _radarrange];
+	systemChat format ["A RADAR HAS BEEN INITIALIZED AT %1 WITH RANGE %2", (mapGridPosition _radar), _radarrange];
 #endif
 
 
@@ -49,9 +49,9 @@ _handle = [
 				_target = (([_targetsNotTracked, [_currentCram], {_input0 distance _x}] call BIS_fnc_sortBy)) select 0;
 
 				_trackedTargets = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
-				missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets + [_target], true];
+				missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets append [_target], true];
 
-				_targetsNotTracked = _targetsNotTracked - [_target];
+				_targetsNotTracked = _targetsNotTracked deleteAt (_targetsNotTracked find _target);
 
 				[_x, _target] spawn RR_fnc_handleTarget;
 
