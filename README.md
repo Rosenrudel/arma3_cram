@@ -29,6 +29,11 @@ class CfgFunctions {
 };
 ```
 
+**Wanted Functionality**
+
+<img src="https://i.imgur.com/B9lKGW8.png">
+<img src="https://i.imgur.com/bIpXPfl.png">
+
 **Roadmap:**
 
 ```

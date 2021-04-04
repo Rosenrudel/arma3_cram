@@ -1,24 +1,25 @@
 /**
 	Discovers Targets (Missles, Rockets and Artillery Shells)
 
-	@param _position - Position from which the range is calculated
-	@param _range	 - Range from which targets are aquiered
+	@param _radar - Radar from which the range is calculated
+	@param _range - Range from which targets are aquiered
 	@param _minHeightIntercept - (opt.) Minimal height for a shell
  */
-params["_position", "_range", ["_minHeightIntercept", 30]];
+params["_radar", "_range", ["_minHeightIntercept", 30]];
 
-#include "..\CfgDefines.hpp"
+#include "..\..\CfgDefines.hpp"
 
 private _shellRegistry = [];
 
 // Discover Rockets
-_shellRegistry append (_cram nearObjects["Rocketbase",_range]);
+_shellRegistry append (_radar nearObjects["Rocketbase",_range]);
+_shellRegistry append (_radar nearObjects["SubmunitionBase",_range]);
 
 // Discover Artillery Shells
-_shellRegistry append (_cram nearObjects["ShellBase",_range]);
+_shellRegistry append (_radar nearObjects["ShellBase",_range]);
 
 // Discover Missiles
-_shellRegistry append (_cram nearObjects["MissileBase",_range]);
+_shellRegistry append (_radar nearObjects["MissileBase",_range]);
 
 
 #ifdef DEBUG
