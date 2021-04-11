@@ -10,12 +10,22 @@
 	@param _target - The target to calc the lead for
  */
 
-params['_turret', '_target', ['_bulletVelocity', 1400]];
+params['_turret', '_target'];
 
-private _farTargetValue = (_turret distance _target) > 3000;
-private _nearTargetValue = (_turret distance _target) > 1000;
-private _closeTargetValue = (_turret distance _target) < 1000;
-private _travelTime = (_turret distance _target)/_bulletVelocity;
-private _leadVector = (velocity _target) vectorMultiply _travelTime;
+private _bulletVelocity = 1400;
+private _bulletVelocityClose = 1500;
+private _closeTargetValue = (_turret distance _target) < 600;
+private _travelTime = [];
+private _leadVector = [];
+private _gottaGoFast = [];
 
-(getPos _target) vectorAdd _leadVector;
+if (_closeTargetValue) then {
+	setVariable [_gottaGoFast, 1];
+};
+
+switch _gottaGoFast do {
+	case "0": {_travelTime = (_turret distance _target)/_bulletVelocity};
+	case "1": {_travelTime = (_turret distance _target)/_bulletVelocityClose};
+};
+
+(getPos _target) vectorAdd [(velocity _target) vectorMultiply _travelTime];
