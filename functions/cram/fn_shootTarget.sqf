@@ -13,7 +13,7 @@ params['_turret', '_target', '_dummy','_shots', '_timeBetweenShots'];
 #include "..\..\CfgDefines.hpp"
 
 private _groundUpAngle = 0.17;
-private _interceptSpeedPreset = 1200;
+//private _interceptSpeedPreset = 1200;
 
 _handle = [
 	{
@@ -21,7 +21,7 @@ _handle = [
 	private _target = (_this select 0) select 1;
 	private _dummy = (_this select 0) select 2;
 
-	_lead = [_turret, _target, _interceptSpeedPreset] call RR_fnc_calcLead;
+	_lead = [_turret, _target] call RR_fnc_calcLead;
 	_turret lookAt _lead;
 
 	// Delete the hitbox if the target is to low
