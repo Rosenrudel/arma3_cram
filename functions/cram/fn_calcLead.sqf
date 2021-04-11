@@ -14,12 +14,12 @@ params['_turret', '_target'];
 
 private _bulletVelocity = 1400;
 private _bulletVelocityClose = 1500;
-private _closeTargetValue = (_turret distance _target) < 600;
+private _closeTargetBool = (_turret distance _target) < 600;
 private _travelTime = [];
 private _leadVector = [];
 private _gottaGoFast = [];
 
-if (_closeTargetValue) then {
+if (_closeTargetBool) then {
 	setVariable [_gottaGoFast, 1];
 };
 
