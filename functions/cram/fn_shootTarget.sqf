@@ -8,27 +8,28 @@
 	@param _timeBetweenShots - Time between two shots
  */
 
-params['_turret', '_target', '_dummy','_shots', '_timeBetweenShots'];
+params['_turret', '_target', '_shots', '_timeBetweenShots'];
 
 #include "..\..\CfgDefines.hpp"
 
 private _groundUpAngle = 0.17;
 private _interceptSpeedPreset = 1200;
+private _hitBox = (attachedObjects _target) select 0;
 
 _handle = [
 	{
 	private _turret = (_this select 0) select 0;
 	private _target = (_this select 0) select 1;
-	private _dummy = (_this select 0) select 2;
+	private _hitBox = (_this select 0) select 2;
 
 	_lead = [_turret, _target, _interceptSpeedPreset] call RR_fnc_calcLead;
 	_turret lookAt _lead;
 
 	// Delete the hitbox if the target is to low
-	if (getPosATL _target select 2 < 10) then { deleteVehicle _dummy; }
+	if (getPosATL _target select 2 < 10) then { deleteVehicle _hitBox; }
 	},
 	0,
-	[_turret, _target, _dummy]
+	[_turret, _target, _hitBox]
 ] call CBA_fnc_addPerFrameHandler;
 
 // Wait for the turret to be on target
@@ -46,7 +47,7 @@ while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select
 	for [{private _i = 0}, {_i < _shots && alive _target}, {_i = _i +1}] do
 	{	
 		// Force position synchronization for the hitbox
-		_dummy setPos getPos _target;
+		_hitBox setPos getPos _target;
 		
 		[_turret, currentWeapon _turret] call BIS_fnc_fire;
 		sleep _timeBetweenShots;

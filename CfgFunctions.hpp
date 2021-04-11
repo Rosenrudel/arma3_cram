@@ -11,6 +11,7 @@ class RR_CRAM
 		class calcLead {};
 		class shootTarget {};
 
+		class addHitBox {};
 		class destroyTarget {};
 
 		class targetDebug {};
