@@ -7,7 +7,5 @@ class CramWarning
 	sound[] = {"arma3_cram\sound\cramwarning.ogg", 10, 1, 100};
 
 	// subtitle
-	titles[] = { 1, "*CRAM Warning*"};
-
-
+	titles[] = { 1, "*CRAM Incoming Warning*"};
 };
