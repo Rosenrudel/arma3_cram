@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="https://github.com/PaxJaromeMalues/arma3_cram/releases/latest">
-        <img src="https://img.shields.io/badge/Version-1.0.a.1-yellow.svg" alt="Version">
+        <img src="https://img.shields.io/badge/Version-1.0.a.3-yellow.svg" alt="Version">
     </a>
 	<a href="https://github.com/CBATeam/CBA_A3/releases">
         <img src="https://img.shields.io/badge/CBA-blue.svg" alt="CBA">
@@ -11,7 +11,7 @@
         <img src="https://img.shields.io/github/issues-raw/PaxJaromeMalues/arma3_cram.svg?label=Issues" alt="Issues">
     </a>
     <a href="https://arma3.rosenrudel.de/">
-        <img src="https://img.shields.io/badge/RR-ARMA-lightgrey.svg?colorA=B19E71&colorB=1A6BB6" alt="RR">
+        <img src="https://img.shields.io/badge/RR-ARMA-lightgrey.svg?color=1A6BB6" alt="RR">
     </a>
 </p>
 
