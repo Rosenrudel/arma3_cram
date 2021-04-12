@@ -8,14 +8,9 @@ params['_target'];
 
 #include "..\..\CfgDefines.hpp"
 
-// Deletes all attached objects
-{
-	deleteVehicle _x;
-} forEach attachedObjects _target;
-
-
-// Triggers the target
-triggerAmmo _target;
+// Deletes the target
+[typeOf _target, getPos _target] remoteExecCall ['RR_fnc_deleteTarget', 0];
+//[typeOf _target, getPos _target] call RR_fnc_deleteTarget;
 
 // Add extra explosion for drama
 "helicopterexplosmall" createVehicle (getPos _target);

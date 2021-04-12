@@ -1,5 +1,6 @@
 class ArtiHandler
 {
+	//debug = "systemChat str (_this select 6);";
 	debug = "systemChat str (_this select 6);";
 	hitBox = "[_this select 6] call RR_fnc_addHitBox;";
 };

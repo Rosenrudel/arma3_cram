@@ -13,6 +13,7 @@ class RR_CRAM
 
 		class addHitBox {};
 		class destroyTarget {};
+		class deleteTarget {};
 
 		class targetDebug {};
 	};

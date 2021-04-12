@@ -5,7 +5,7 @@ params['_target'];
 // Create Hitbox with 2x2x2 
 _dummy = createVehicle ["ProtectionZone_Invisible_F", [0, 0, 0]];
 _dummy attachTo [_target, [0, 0, 0]];
-_dummy setObjectScale _dummyObjectScale;
+_dummy setObjectScale 0.05;
 
 // Create visible 
 #ifdef DEBUG
