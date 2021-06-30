@@ -1,0 +1,12 @@
+name = "Arma 3 CRAM";
+picture = "logo_a3cram_ca.paa";
+actionName = "GitHub";
+action = "https://github.com/PaxJaromeMalues/arma3_cram";
+description = "A3CRAM";
+logo = "logo_a3cram_ca.paa";
+logoOver = "logo_a3cram_ca.paa";
+tooltip = "A3CRAM";
+tooltipOwned = "A3CRAM Owned";
+overview = "This mod aims to provide integrated and networked CRAM capabilities to therefore modified vanilla assets.";
+author = "A3CRAM Team & Contributors";
+overviewPicture = "logo_a3cram_ca.paa";

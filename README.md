@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="https://github.com/PaxJaromeMalues/arma3_cram/releases/latest">
-        <img src="https://img.shields.io/badge/Version-1.0.a.1-yellow.svg" alt="Version">
+        <img src="https://img.shields.io/badge/Version-1.0.b.x-red.svg" alt="Version">
     </a>
 	<a href="https://github.com/CBATeam/CBA_A3/releases">
         <img src="https://img.shields.io/badge/CBA-blue.svg" alt="CBA">
