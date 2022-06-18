@@ -21,8 +21,8 @@ params["_turret", "_target"];
 			private _distance = _turret distance _target;
 			private _distance2D = _turret distance2D _target;
 
-			hintSilent format ["Target: %1 \nDistance: %2 \nDistance2D: %3", 
-									_target,  _distance, _distance2D];
+			hintSilent format ["Target: %1 \nDistance: %2 \nDistance2D: %3\nHitprob: %4", 
+									_target,  _distance, _distance2D, exp (-sqrt(_turret distance _target)/10)];
 			
 			};
 	},

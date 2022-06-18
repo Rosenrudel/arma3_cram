@@ -8,14 +8,10 @@ params['_target'];
 
 #include "..\..\CfgDefines.hpp"
 
-// Deletes all attached objects
-{
-	deleteVehicle _x;
-} forEach attachedObjects _target;
-
-
 // Triggers the target
-triggerAmmo _target;
+//triggerAmmo _target;
+
+deleteVehicle _target;
 
 // Add extra explosion for drama
 "helicopterexplosmall" createVehicle (getPos _target);
