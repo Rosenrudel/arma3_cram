@@ -18,21 +18,27 @@ private _groundUpAngle = 0.17;
 _handle = [
 	{	
 	private _turret = (_this select 0) select 0;
-	private _target = (_this select 0) select 1;
+	private _target = _turret getVariable 'RR_CRAM_CURRENT';
+	_target = [_turret, _target] call RR_fnc_getTarget;
+	if(isNUll _target) exitWith {};
 
 	_lead = [_turret, _target] call RR_fnc_calcLead;
 	_turret lookAt _lead;
 	
 	},
 	0,
-	[_turret, _target]
+	[_turret]
 ] call CBA_fnc_addPerFrameHandler;
 
 // Wait for the turret to be on target
 sleep 1;
 private _counter = 1;
+private _error = false;
 waitUntil{
-	sleep 0.2; 
+	sleep 0.2;
+	_target = _turret getVariable 'RR_CRAM_CURRENT';
+	if(isNUll _target) exitWith {true};
+
 	_toTarget = (getPos _target) vectorDiff (getPos _turret);
 	_aim = _turret weaponDirection currentWeapon _turret;
 	if (acos(_toTarget vectorCos _aim) < 5) then{
@@ -43,9 +49,9 @@ waitUntil{
 };
 
 // Repeat until target is not longer alive or not longer in allowed angle zone
-
-while {alive _target && (_turret weaponDirection (currentWeapon _turret)) select 2 > _groundUpAngle} do
+while {!(isNull _target) && (_turret weaponDirection (currentWeapon _turret)) select 2 > _groundUpAngle} do
 {
+	_target = _turret getVariable 'RR_CRAM_CURRENT';
 	for [{private _i = 0}, {_i < _shots}, {_i = _i +1}] do
 	{			
 		[_turret, currentWeapon _turret] call BIS_fnc_fire;

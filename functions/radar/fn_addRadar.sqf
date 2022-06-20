@@ -38,15 +38,45 @@ _handle = [
 		_crams  = (_this select 0) select 1;
 		_radarrange = (_this select 0) select 2;
 		
-		_trackedTargets = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
-		missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets - [objNull], true];
+		_trackedTargets_old = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
+		_lastPositions_old = missionNameSpace getVariable ["RR_CRAM_LASTPOSITIONS", []];
+		_lastTypes_old = missionNameSpace getVariable ["RR_CRAM_LASTTYPES", []];
+
+		_trackedTargets = [];
+		_lastPositions = [];
+		_lastTypes = [];
+
+		/* Update tracked targets which can get null and try to find them again */
+		{
+			_target = _x;
+			if(isNull _target) then {
+				_pos = _lastPositions_old select _forEachIndex;
+				_type = _lastTypes_old select _forEachIndex;
+				_targets = _pos nearObjects [_type, 100];
+
+				if(count _targets != 0) then {
+					_target = _targets select 0;
+				}else{
+					continue;
+				}
+			};
+
+			_trackedTargets pushBack (_target);
+			_lastPositions pushBack (getPos _target);
+			_lastTypes pushBack (typeOf _target);
+		}foreach _trackedTargets_old;
+
+
+		missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets, true];
+		missionNameSpace setVariable ["RR_CRAM_LASTPOSITIONS", _lastPositions, true];
+		missionNameSpace setVariable ["RR_CRAM_LASTTYPES", _lastTypes, true];
 
 		// Get possible targets
 		_targetsNotTracked = ([getPosATL _radar, _radarrange] call RR_fnc_discoverTargets) select {!(_x in (missionNamespace getVariable ["RR_CRAM_TRACKED", []]))};
 		// Get free crams
 		_freeCrams = _crams select {!(_x getVariable ["RR_CRAM_BUSY", true])};
 
-		if (count _targetsNotTracked > 0) then
+		if ((count _targetsNotTracked) + (count _trackedTargets) > 0) then
 		{
 			{
 				[_x] call RR_fnc_playAlarm;
@@ -62,24 +92,33 @@ _handle = [
 			{
 				_target = (([_targetsNotTracked, [_currentCram], {_input0 distance _x}] call BIS_fnc_sortBy)) select 0;
 
-				_trackedTargets = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
-				_trackedTargets append [_target];
-				missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets, true];
+				//_trackedTargets = missionNamespace getVariable ["RR_CRAM_TRACKED", []];
+				_trackedTargets pushBack _target;
+				_lastPositions pushBack (getPos _target);
+				_lastTypes pushBack (typeOf _target);
 
 				_targetsNotTracked deleteAt (_targetsNotTracked find _target);
 
 				[_x, _target] spawn RR_fnc_handleTarget;
 
 				#ifdef DEBUG
-					systemChat format ["Target: %1, Tracker: %2", _target, _currentCram];
+					diag_log format ["Target: %1, Tracker: %2", _target, _currentCram];
 				#endif
 			};
 			
 		} forEach _freeCrams ;
 
+		missionNamespace setVariable ["RR_CRAM_TRACKED", _trackedTargets, true];
+		missionNameSpace setVariable ["RR_CRAM_LASTPOSITIONS", _lastPositions, true];
+		missionNameSpace setVariable ["RR_CRAM_LASTTYPES", _lastTypes, true];
+
+		#ifdef DEBUG
+			diag_log str (missionNamespace getVariable ["RR_CRAM_TRACKED", []]);
+		#endif
+
 		// Remove event handler if the radar is dead
 		if (!alive _radar) then { [_this select 1] call CBA_fnc_removePerFrameHandler; }
 	},
-	0.5,
+	0.2,
 	[_radar, _crams, _radarrange]
 ] call CBA_fnc_addPerFrameHandler;

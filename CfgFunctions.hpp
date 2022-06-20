@@ -6,6 +6,7 @@ class RR_CRAM
 		file = "arma3_cram\functions\cram"
 		class addCram {};
 
+		class getTarget {};
 		class handleTarget {};
 
 		class calcLead {};

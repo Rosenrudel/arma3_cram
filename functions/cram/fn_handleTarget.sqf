@@ -41,26 +41,50 @@ private _dummyObjectScale = 0.05;
 	};
 #endif
 
+/* Wait until projectile is in reach */
+private _error = false;
 waitUntil{
-	if (!((alive _target) && (call _withinTurretAngle))) exitWith {true};
+	/* Get target */
+	_target = [_cram, _target] call RR_fnc_getTarget;
+	if(isNUll _target) exitWith {
+		_error = true;
+		true;
+	};
 
-	(_target distance _cram < _rangeCramAttention) && (_target distance _cram > _rangeEngageAttentionMin);
+	if (!(call _withinTurretAngle) && (_target distance _cram < _rangeEngageAttentionMin)) exitWith {
+		_error = true;
+		true;
+	};
+
+	(_target distance _cram < _rangeCramAttention);
 };
 
-if (!((alive _target) && (call _withinTurretAngle))) exitWith {
+if (_error) exitWith {
 	call _unregisterTarget;
 	_cram setVariable ["RR_CRAM_BUSY", false];
 };
 
+// Lets the turret look in the direction of the projectile
 _cram doWatch _target;
 
+/* Wait until target is engagment range */
 waitUntil{
-	if (!((alive _target) && (call _withinTurretAngle))) exitWith {true};
+	/* Get target */
+	_target = [_cram, _target] call RR_fnc_getTarget;
+	if(isNUll _target) exitWith {
+		_error = true;
+		true;
+	};
 
-	(_target distance _cram < _rangeCramEngage) && (_target distance _cram > _rangeEngageAttentionMin) && (_cram weaponDirection (currentWeapon _cram)) select 2 > 0.1;
+	if (!(call _withinTurretAngle) && (_target distance _cram < _rangeEngageAttentionMin)) exitWith {
+		_error = true;
+		true;
+	};
+
+	(_target distance _cram < _rangeCramEngage) && (_cram weaponDirection (currentWeapon _cram)) select 2 > 0.1; // ?
 };
 
-if (!((alive _target) && (call _withinTurretAngle))) exitWith {
+if (_error) exitWith {
 	_cram doWatch objNull;
 	call _unregisterTarget;
 	_cram setVariable ["RR_CRAM_BUSY", false];
