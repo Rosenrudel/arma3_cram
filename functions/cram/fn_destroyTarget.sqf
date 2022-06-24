@@ -9,7 +9,7 @@ params['_target'];
 #include "..\..\CfgDefines.hpp"
 
 // Triggers the target
-//triggerAmmo _target;
+triggerAmmo _target;
 
 deleteVehicle _target;
 

@@ -52,11 +52,11 @@ waitUntil{
 while {!(isNull _target) && (_turret weaponDirection (currentWeapon _turret)) select 2 > _groundUpAngle} do
 {
 	_target = _turret getVariable 'RR_CRAM_CURRENT';
-	for [{private _i = 0}, {_i < _shots}, {_i = _i +1}] do
+	for [{private _i = 0}, {_i < _shots && !(isNull _target)}, {_i = _i +1}] do
 	{			
 		[_turret, currentWeapon _turret] call BIS_fnc_fire;
 
-		_prob = exp (-sqrt(_turret distance _target)/5) * _i/10;
+		_prob = 1/3 * exp (-sqrt(_turret distance _target)/5) * _i/10;
 		_rdm = (floor random 1000)/1000;
 
 		if(_rdm < _prob) then

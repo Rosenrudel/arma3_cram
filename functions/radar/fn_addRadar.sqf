@@ -73,6 +73,8 @@ _handle = [
 
 		// Get possible targets
 		_targetsNotTracked = ([getPosATL _radar, _radarrange] call RR_fnc_discoverTargets) select {!(_x in (missionNamespace getVariable ["RR_CRAM_TRACKED", []]))};
+
+		diag_log format ["New: %1 | Old: %2", _targetsNotTracked, _trackedTargets];
 		// Get free crams
 		_freeCrams = _crams select {!(_x getVariable ["RR_CRAM_BUSY", true])};
 
@@ -113,12 +115,12 @@ _handle = [
 		missionNameSpace setVariable ["RR_CRAM_LASTTYPES", _lastTypes, true];
 
 		#ifdef DEBUG
-			diag_log str (missionNamespace getVariable ["RR_CRAM_TRACKED", []]);
+			//diag_log str (missionNamespace getVariable ["RR_CRAM_TRACKED", []]);
 		#endif
 
 		// Remove event handler if the radar is dead
 		if (!alive _radar) then { [_this select 1] call CBA_fnc_removePerFrameHandler; }
 	},
-	0.2,
+	0,
 	[_radar, _crams, _radarrange]
 ] call CBA_fnc_addPerFrameHandler;
